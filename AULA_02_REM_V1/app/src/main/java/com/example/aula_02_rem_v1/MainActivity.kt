@@ -11,6 +11,23 @@ import androidx.core.view.WindowInsetsCompat
 class MainActivity : AppCompatActivity() {
     private  var xModelo: Int = 0
     private  var yModelo: Int = 0
+    private  var viewX: TextView? = null
+    private  var eq1:   TextView? = null
+
+    private fun inicializar(){
+        val botaoUp: Button = findViewById(R.id.ID1_XUp_button)
+        viewX = findViewById(R.id.ID1_XMod_textView)
+        eq1   = findViewById(R.id.ID1_EQ1_textView)
+
+        botaoUp.setOnClickListener {
+            xModelo = xModelo + 1
+            viewX?.text = "Valor X ${xModelo}"
+
+            var eq1Temp: Int = 0
+            eq1Temp = 2* xModelo + 3*yModelo
+            eq1?.text = eq1Temp.toString()
+        }
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
 
@@ -22,11 +39,6 @@ class MainActivity : AppCompatActivity() {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
             insets
         }
-        val botaoUp: Button = findViewById(R.id.ID1_XUp_button)
-        val viewX: TextView = findViewById(R.id.ID1_XMod_textView)
-        botaoUp.setOnClickListener {
-            xModelo = xModelo + 1
-            viewX.text = "Valor X ${xModelo}"
-        }
+        inicializar()
     }
 }
