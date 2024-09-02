@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".MainActivity">
+
+    <EditText
+        android:id="@+id/ID1_INSEREeditTextNumberDecimal"
+        android:layout_width="168dp"
+        android:layout_height="52dp"
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="16dp"
+        android:ems="10"
+        android:inputType="numberDecimal"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
+        android:id="@+id/ID1_INSERE_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="60dp"
+        android:layout_marginTop="16dp"
+        android:text="Insere"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toEndOf="@+id/ID1_INSEREeditTextNumberDecimal"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/ID1_SOMA_textView"
+        android:layout_width="56dp"
+        android:layout_height="21dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="28dp"
+        android:text="SOMA"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/ID1_INSEREeditTextNumberDecimal" />
+
+    <TextView
+        android:id="@+id/ID1_MAIORtextView2"
+        android:layout_width="59dp"
+        android:layout_height="22dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="28dp"
+        android:text="Menor"
+        app:layout_constraintStart_toEndOf="@+id/ID1_SOMA_textView"
+        app:layout_constraintTop_toBottomOf="@+id/ID1_INSEREeditTextNumberDecimal" />
+
+    <TextView
+        android:id="@+id/ID1_MENORtextView3"
+        android:layout_width="54dp"
+        android:layout_height="22dp"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="28dp"
+        android:text="Maior"
+        app:layout_constraintStart_toEndOf="@+id/ID1_MAIORtextView2"
+        app:layout_constraintTop_toBottomOf="@+id/ID1_INSEREeditTextNumberDecimal" />
+
+    <ListView
+        android:id="@+id/ID1_LISTA_ListVIEW"
+        android:layout_width="267dp"
+        android:layout_height="336dp"
+        android:layout_marginTop="64dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/ID1_MAIORtextView2"
+        app:layout_constraintVertical_bias="0.0" />
+
+    <Button
+        android:id="@+id/ID1_CLEAR_button2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="32dp"
+        android:text="Limpar"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toEndOf="@+id/ID1_MENORtextView3"
+        app:layout_constraintTop_toBottomOf="@+id/ID1_INSERE_button" />
+</androidx.constraintlayout.widget.ConstraintLayout>
