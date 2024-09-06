@@ -61,7 +61,12 @@ class MainActivity : AppCompatActivity() {
             adaptador?.clear()
             adaptador?.notifyDataSetChanged()
         }
-        
+        listaViewInsercao?.setOnItemClickListener { parent, view, posicao, identificador ->
+            var itemSelecionado = parent.getItemAtPosition(posicao).toString()
+            insereEditText?.setText(itemSelecionado)
+        }
+
+
 
     }
     // Metodos de logica de negocios
