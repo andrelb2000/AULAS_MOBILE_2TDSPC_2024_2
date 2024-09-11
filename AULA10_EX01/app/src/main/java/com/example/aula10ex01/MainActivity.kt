@@ -81,10 +81,9 @@ class MainActivity : AppCompatActivity() {
             var pecaInserida = Peca(nome,codigo,valor,custo,servico)
             listaPecas?.add(pecaInserida)
             adaptador?.notifyDataSetChanged()
-            var total:Float
-            var lucro:Float
-            for(int i=0 ; i < listaPecas.size(); i++){
-                var peca:Peca = listaPecas.get(i)
+            var total:Float = 0F
+            var lucro:Float = 0F
+            for(peca in listaPecas!!){
                 total += peca.total()
                 lucro += peca.lucro()
             }
