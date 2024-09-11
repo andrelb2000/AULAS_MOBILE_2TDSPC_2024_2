@@ -42,6 +42,12 @@ class Peca{
         return "Peca('$nomePeca' - '$codigoPeca' = R$ $valorPeca)"
     }
 
+    fun getNomePeca():String {return nomePeca}
+    fun getCodigoPeca():String {return codigoPeca}
+    fun getValorPeca():Float{  return valorPeca}
+    fun getCustoPeca():Float{  return custoPeca}
+    fun getServicoPeca():Float{ return servicoPeca}
+
 }
 
 
@@ -89,6 +95,13 @@ class MainActivity : AppCompatActivity() {
             }
             totalPecas?.text = "R$ ${total}"
             lucroPecas?.text = "R$ ${lucro}"
+        }
+        listaPecasView?.setOnItemClickListener { adaptador, view, i, l ->
+            nomePeca?.setText(listaPecas?.get(i)?.getNomePeca() )
+            codigoPeca?.setText(listaPecas?.get(i)?.getCodigoPeca())
+            valorPeca?.setText("${listaPecas?.get(i)?.getValorPeca()}")
+            custoPeca?.setText("${listaPecas?.get(i)?.getCustoPeca()}")
+            servicoPeca?.setText("${listaPecas?.get(i)?.getServicoPeca()}")
         }
     }
 
