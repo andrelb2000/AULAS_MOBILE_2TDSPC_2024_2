@@ -1,5 +1,6 @@
 package com.example.aula10ex01
 
+import android.content.Intent
 import android.os.Bundle
 import android.widget.ArrayAdapter
 import android.widget.Button
@@ -63,6 +64,7 @@ class MainActivity : AppCompatActivity() {
     private var totalPecas:TextView? = null
     private var lucroPecas:TextView? = null
     private var listaPecas: ArrayList<Peca>? = null
+
     private var adaptador:ArrayAdapter<Peca>? = null
     private var adaptadorSP:ArrayAdapter<Peca>? = null
     private var listaPecasView:ListView? = null
@@ -79,14 +81,14 @@ class MainActivity : AppCompatActivity() {
         lucroPecas = findViewById(R.id.ID1_LUCROtextView6)
         listaPecasView = findViewById(R.id.ID1_LISTA_ListView)
         listaSpinner   = findViewById(R.id.ID1_LISTAspinner)
-        
 
         listaPecas = ArrayList<Peca>()
+
         adaptador = ArrayAdapter<Peca>(this,android.R.layout.simple_list_item_1, listaPecas!!)
+        listaPecasView?.adapter = adaptador
         adaptadorSP = ArrayAdapter<Peca>(this,android.R.layout.simple_spinner_item, listaPecas!!)
         adaptadorSP?.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
         listaSpinner?.adapter = adaptadorSP
-        listaPecasView?.adapter = adaptador
 
         botaoInsere?.setOnClickListener {
             var nome   = nomePeca?.text.toString()
@@ -113,9 +115,41 @@ class MainActivity : AppCompatActivity() {
             valorPeca?.setText("${listaPecas?.get(i)?.getValorPeca()}")
             custoPeca?.setText("${listaPecas?.get(i)?.getCustoPeca()}")
             servicoPeca?.setText("${listaPecas?.get(i)?.getServicoPeca()}")
-        }
-    }
 
+            val pacoteDetalhe = Bundle()
+            pacoteDetalhe.putString("NOME",nomePeca?.text.toString())
+            pacoteDetalhe.putString("CODIGO",codigoPeca?.text.toString())
+            pacoteDetalhe.putString("PRECO",valorPeca?.text.toString())
+            pacoteDetalhe.putString("CUSTO",custoPeca?.text.toString())
+            pacoteDetalhe.putString("SERVICO",servicoPeca?.text.toString())
+
+            val detalheIntent = Intent(this,PecasActivity::class.java)
+            detalheIntent.putExtras(pacoteDetalhe)
+            startActivity(detalheIntent)
+        }
+        /*
+        listaSpinner?.setOnItemClickListener { adaptadorSP, view, i, l ->
+            nomePeca?.setText(listaPecas?.get(i)?.getNomePeca() )
+            codigoPeca?.setText(listaPecas?.get(i)?.getCodigoPeca())
+            valorPeca?.setText("${listaPecas?.get(i)?.getValorPeca()}")
+            custoPeca?.setText("${listaPecas?.get(i)?.getCustoPeca()}")
+            servicoPeca?.setText("${listaPecas?.get(i)?.getServicoPeca()}")
+
+            val pacoteDetalhe = Bundle()
+            pacoteDetalhe.putString("NOME",nomePeca?.text.toString())
+            pacoteDetalhe.putString("CODIGO",codigoPeca?.text.toString())
+            pacoteDetalhe.putString("PRECO",valorPeca?.text.toString())
+            pacoteDetalhe.putString("CUSTO",custoPeca?.text.toString())
+            pacoteDetalhe.putString("SERVICO",servicoPeca?.text.toString())
+
+            val detalheIntent = Intent(this,PecasActivity::class.java)
+            detalheIntent.putExtras(pacoteDetalhe)
+            startActivity(detalheIntent)
+        }
+        */
+
+
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -127,5 +161,9 @@ class MainActivity : AppCompatActivity() {
             insets
         }
         inicializacao()
+
     }
+
+
+
 }
