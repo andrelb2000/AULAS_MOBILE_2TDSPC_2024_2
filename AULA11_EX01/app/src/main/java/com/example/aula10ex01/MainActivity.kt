@@ -79,6 +79,7 @@ class MainActivity : AppCompatActivity() {
         lucroPecas = findViewById(R.id.ID1_LUCROtextView6)
         listaPecasView = findViewById(R.id.ID1_LISTA_ListView)
         listaSpinner   = findViewById(R.id.ID1_LISTAspinner)
+        
 
         listaPecas = ArrayList<Peca>()
         adaptador = ArrayAdapter<Peca>(this,android.R.layout.simple_list_item_1, listaPecas!!)
