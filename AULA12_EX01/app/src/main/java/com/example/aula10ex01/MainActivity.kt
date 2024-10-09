@@ -15,7 +15,7 @@ import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.fragment.app.Fragment.SavedState
 import java.io.Serializable
-
+// IMPLEMENTAR a interface "Serializable" para poder enviar ///
 class Peca : Serializable {
     private var nomePeca: String
     private var codigoPeca: String
@@ -131,18 +131,22 @@ class MainActivity : AppCompatActivity() {
             lucroPecas?.text = "R$ ${lucro}"
         }
         listaPecasView?.setOnItemClickListener { adaptador, view, i, l ->
+            // Pegando os dados do item clicado
             nomePeca?.setText(listaPecas?.get(i)?.getNomePeca() )
             codigoPeca?.setText(listaPecas?.get(i)?.getCodigoPeca())
             valorPeca?.setText("${listaPecas?.get(i)?.getValorPeca()}")
             custoPeca?.setText("${listaPecas?.get(i)?.getCustoPeca()}")
             servicoPeca?.setText("${listaPecas?.get(i)?.getServicoPeca()}")
-
+            // Criando objeto de "transferencia" n orgrg
             val pacoteDetalhe = Bundle()
             pacoteDetalhe.putString("NOME",nomePeca?.text.toString())
             pacoteDetalhe.putString("CODIGO",codigoPeca?.text.toString())
             pacoteDetalhe.putString("PRECO",valorPeca?.text.toString())
             pacoteDetalhe.putString("CUSTO",custoPeca?.text.toString())
             pacoteDetalhe.putString("SERVICO",servicoPeca?.text.toString())
+            /// "Empacotando TODA a lista e enviando para a SEGUNDA activity ///
+            /// OBS: PARA ISTO é NECESSARIO que o OBJETO que esta na lista ///
+            /// implemente a interface "serializable"
             pacoteDetalhe.putSerializable("LISTA",listaPecas)
 
             val detalheIntent = Intent(this,PecasActivity::class.java)

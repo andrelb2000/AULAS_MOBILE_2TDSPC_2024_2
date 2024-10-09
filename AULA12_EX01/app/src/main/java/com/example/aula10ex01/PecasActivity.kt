@@ -35,9 +35,11 @@ class PecasActivity : AppCompatActivity() {
         custoPeca = findViewById(R.id.ID2_CUSTOeditTextNumber)
         servicoPeca = findViewById(R.id.ID2_SERVICOeditTextNumber3)
         botaoVolta = findViewById(R.id.ID2_VOLTAbutton)
-
+        // Atributo PARTE de TODA Activity (intent) --> Pacote "chegando" (extras)
         val pacoteDetalhe = intent.extras
+        // if pacoteDetalhe != null ... //
 
+        // Colocando os dados que chegaram no pacote nos elementos da  tela visual
         nomePeca?.setText(pacoteDetalhe?.getString("NOME") )
         codigoPeca?.setText(pacoteDetalhe?.getString("CODIGO") )
         valorPeca?.setText(pacoteDetalhe?.getString("PRECO") )
@@ -47,6 +49,7 @@ class PecasActivity : AppCompatActivity() {
         botaoVolta?.setOnClickListener {
             val principalIntent = Intent(this,MainActivity::class.java)
             val pacoteLista = Bundle()
+            // Obter a lista que VEIO da Activity principal (ou activity de origem)
             val listaChegada: ArrayList<Peca> = intent.extras?.getSerializable("LISTA") as ArrayList<Peca>
 
             pacoteLista.putSerializable("LISTA",listaChegada)
