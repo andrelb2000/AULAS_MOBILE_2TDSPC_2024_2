@@ -76,7 +76,6 @@ class NovoITEMActivity : AppCompatActivity() {
         var cepRua = cepEditText?.text.toString()
         val url = URL("https://viacep.com.br/ws/"+  cepRua + "/json")
         ///////////////////////////////////////////
-
         // Começar execução em segundo plano para busca na rede
         val executorSegundoPlano = Executors.newSingleThreadExecutor()
             /// A partir desse ponto roda em segundo plano
@@ -90,7 +89,6 @@ class NovoITEMActivity : AppCompatActivity() {
                     // Obtem a Strem de entrada
                     val streamEntrada = conexao.inputStream
                     val leitorJason = JsonReader(InputStreamReader(streamEntrada, "UTF-8"))
-
                     /////// A partir desse ponto é apenas a varredura do JSON
                     leitorJason.beginObject()
                     if(leitorJason.hasNext()) {
@@ -98,7 +96,6 @@ class NovoITEMActivity : AppCompatActivity() {
                         leitorJason.skipValue()
                         val ruaLabel = leitorJason.nextName()
                         val ruaValue = leitorJason.nextString()
-
                         // Acessa o plano de execução principal//
                         runOnUiThread {
                             ruaEditText?.setText(ruaValue.toString())
