@@ -14,6 +14,12 @@ import java.io.Serializable
 ///////////////////////////////////////////////
 class Telefone:Serializable{
     private var telefone:String = "21 99999999"
+    public fun setTelefone(tel:String){
+        telefone = tel
+    }
+    public fun getTelefone():String{
+        return telefone
+    }
 }
 //////////////////////////////////////////////
 class Pessoa:Serializable{
@@ -25,13 +31,18 @@ class Pessoa:Serializable{
     public fun getNomePessoa():String{
         return nomePessoa
     }
+      public fun getTel():Telefone{
+        return telPessoa
+    }
+    public fun setNomePessoa(nome:String){
+        nomePessoa = nome
+    }
 }
 
 
 class MainActivity : AppCompatActivity() {
     /// Botao para disparo de Activity para NOVO ITEM
     private var novoButton: Button? = null
-
     // Lista visual principal
     private var listaItens: ArrayList<Pessoa>? = null
     private var listaItensView: ListView? = null
@@ -58,7 +69,11 @@ class MainActivity : AppCompatActivity() {
     fun inicializarAcoes(){
         ///// Esse vai para criacao de NOVO item ////
         novoButton?.setOnClickListener {
+            var pacoteEnvio: Bundle = Bundle()
+            // Colocando a LISTA INTEIRA com o rotulo "LISTA"
+            pacoteEnvio.putSerializable("LISTA",listaItens)
             var novaActivityIntent:Intent = Intent(this,NovoITEMActivity::class.java)
+            novaActivityIntent.putExtras(pacoteEnvio)
             startActivity(novaActivityIntent)
         }
         /// Detalhe em item da lista ///
@@ -78,6 +93,20 @@ class MainActivity : AppCompatActivity() {
             startActivity(editarActivityIntent)
         }
     }
+    fun obterDadosRetorno(){
+        if (intent != null){
+            var pacoteChegada:Bundle? = intent?.extras
+            // Obteve a lista enviada
+            if (pacoteChegada != null){
+                listaItens = pacoteChegada?.getSerializable("LISTA2") as ArrayList<Pessoa>
+                if (listaItens!=null){
+                    adaptador = ArrayAdapter<Pessoa>(this,android.R.layout.simple_list_item_1, listaItens!!)
+                    listaItensView?.adapter = adaptador
+                    adaptador?.notifyDataSetChanged()
+                }
+            }
+        }
+    }
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
@@ -89,6 +118,7 @@ class MainActivity : AppCompatActivity() {
         }
         inicializar()
         inicializarAcoes()
+        obterDadosRetorno()
     }
 
 }

@@ -28,31 +28,42 @@ class EditarITEMActivity : AppCompatActivity() {
         telEditText    = findViewById(R.id.ID3_TELeditTextText2)
     }
     fun inicializaAcoes(){
-            confirmaButton?.setOnClickListener {
+        confirmaButton?.setOnClickListener {
             //// Pegar os novos valores nos componentes de entrada (Ex, edit text, etc)
             //// Criar um NOVO objeto da classe pessoa
-            var pessoa: Pessoa()
-
+            var pessoa:Pessoa = Pessoa()
+            if (pessoa != null) {
+                pessoa?.setNomePessoa(nomeEditText?.text.toString())
+                pessoa?.getTel()?.setTelefone(telEditText?.text.toString())
+            }
             //// Colocar na lista no mesmo lugar do objeto anteriror
-            listaChegada.set(indice,pessoa)
-            //// Enviar a lista de volta
-           var pacoteEnvio: Bundle = Bundle()
-           // Colocando a LISTA INTEIRA com o rotulo "LISTA"
-           pacoteEnvio.putSerializable("LISTA",listaChegada)
+            listaChegada?.set(indice!!,pessoa) // Colocando a LISTA INTEIRA com o rotulo "LISTA2"
 
+            var pacoteEnvio: Bundle = Bundle()
+            pacoteEnvio.putSerializable("LISTA2",listaChegada)
             // Voltar para a Activity Principal
             val mainActivityIntent = Intent(this,MainActivity::class.java)
+            //// Enviar a lista de volta
             mainActivityIntent.putExtras(pacoteEnvio)
-
             /// Se já houver uma criada, reutilize
             mainActivityIntent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
             startActivity(mainActivityIntent)
         }
         removeButton?.setOnClickListener {
+            ////////// Remover o indice da lista //////////
+            if (indice != null) {
+                listaChegada?.removeAt(indice!!)
+            }
+            ///////////////////////////////////////////////
             // Voltar para a Activity Principal
             val mainActivityIntent = Intent(this,MainActivity::class.java)
             /// Se já houver uma criada, reutilize
             mainActivityIntent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
+            //// Enviar a lista de volta
+            var pacoteEnvio: Bundle = Bundle()
+            // Colocando a LISTA INTEIRA com o rotulo "LISTA"
+            pacoteEnvio.putSerializable("LISTA2",listaChegada)
+            mainActivityIntent.putExtras(pacoteEnvio)
             startActivity(mainActivityIntent)
         }
         cancelaButton?.setOnClickListener {
@@ -61,6 +72,21 @@ class EditarITEMActivity : AppCompatActivity() {
             /// Se já houver uma criada, reutilize
             mainActivityIntent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
             startActivity(mainActivityIntent)
+        }
+    }
+    fun obterDadosChegada(){
+        if (intent != null){
+            var pacoteChegada:Bundle? = intent?.extras
+            // Obteve a lista enviada
+            if (pacoteChegada != null){
+                listaChegada = pacoteChegada?.getSerializable("LISTA") as ArrayList<Pessoa>
+            }
+            // Indice do item da lista que foi selecionado na activity anterior //
+            indice = pacoteChegada?.getInt("ITEM")?:-1
+            /// Obter a pessoa dentro da lilsta
+            var pessoa: Pessoa? = listaChegada?.get(indice!!)
+            nomeEditText?.setText(pessoa?.getNomePessoa().toString())
+            telEditText?.setText(pessoa?.getTel()?.getTelefone().toString())
         }
     }
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -74,14 +100,6 @@ class EditarITEMActivity : AppCompatActivity() {
         }
         inicializar()
         inicializaAcoes()
-        var pacoteChegada = intent.extras
-        // Obteve a lista enviada
-        listaChegada = pacoteChegada?.getSerializable("LISTA") as ArrayList<Pessoa>
-        // Indice do item da lista que foi selecionado na activity anterior //
-        indice:Int = pacoteChegada?.getInt("ITEM")?:-1
-        /// Obter a pessoa dentro da lilsta
-        var pessoa: Pessoa? = listaChegada.get(indice)
-        nomeEditText?.setText(pessoa?.getNomePessoa().toString())
-
+        obterDadosChegada()
     }
 }
