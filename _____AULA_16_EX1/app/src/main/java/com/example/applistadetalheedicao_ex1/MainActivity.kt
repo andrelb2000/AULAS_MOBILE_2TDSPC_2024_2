@@ -9,40 +9,28 @@ import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
+import com.google.firebase.FirebaseApp
+import com.google.firebase.firestore.FirebaseFirestore
 import java.io.Serializable
-
 ///////////////////////////////////////////////
-class Telefone:Serializable{
-    private var telefone:String = "21 99999999"
-    public fun setTelefone(tel:String){
-        telefone = tel
-    }
-    public fun getTelefone():String{
-        return telefone
+// inserir "DATA" e tirar o "Serializable"
+data class Telefone(
+    var telefone: String = "99 99999999"):Serializable {
+    override fun toString(): String {
+        return "$telefone"
     }
 }
 //////////////////////////////////////////////
-class Pessoa:Serializable{
-    private var nomePessoa:String = "Joao"
-    private var telPessoa:Telefone = Telefone()
-
-
-
+// inserir "DATA"
+data class Pessoa(
+    var idPessoaFb: String = "xxx",
+    var nomePessoa:String = "Joao",
+    var telPessoa:Telefone = Telefone()
+    ) :Serializable{
     override fun toString(): String {
         return "$nomePessoa"
     }
-    public fun getNomePessoa():String{
-        return nomePessoa
-    }
-      public fun getTel():Telefone{
-        return telPessoa
-    }
-    public fun setNomePessoa(nome:String){
-        nomePessoa = nome
-    }
 }
-
-
 class MainActivity : AppCompatActivity() {
     /// Botao para disparo de Activity para NOVO ITEM
     private var novoButton: Button? = null
@@ -51,23 +39,17 @@ class MainActivity : AppCompatActivity() {
     private var listaItensView: ListView? = null
     private var adaptador: ArrayAdapter<Pessoa>? = null
 
+    private lateinit var bancoFb: FirebaseFirestore
     // Funcao que vai materializar os componentes visuais (ligar com os componentes de codigo)
     fun inicializar(){
         novoButton     = findViewById(R.id.ID1_NOVObutton)
         listaItensView = findViewById(R.id.ID1_ListView)
-
         // Inicializacao o completa da lista //
         listaItens = ArrayList<Pessoa>()
         adaptador = ArrayAdapter<Pessoa>(this,android.R.layout.simple_list_item_1, listaItens!!)
         listaItensView?.adapter = adaptador
-
-
-        // para teste (remover depois)
-        listaItens?.add(Pessoa())
         adaptador?.notifyDataSetChanged()
         //////////////////////////////////////
-
-
     }
     fun inicializarAcoes(){
         ///// Esse vai para criacao de NOVO item ////
@@ -119,6 +101,7 @@ class MainActivity : AppCompatActivity() {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
             insets
         }
+        //FirebaseApp.initializeApp(this)
         inicializar()
         inicializarAcoes()
         obterDadosRetorno()

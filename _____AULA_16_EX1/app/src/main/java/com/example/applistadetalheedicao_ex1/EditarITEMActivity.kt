@@ -33,8 +33,8 @@ class EditarITEMActivity : AppCompatActivity() {
             //// Criar um NOVO objeto da classe pessoa
             var pessoa:Pessoa = Pessoa()
             if (pessoa != null) {
-                pessoa?.setNomePessoa(nomeEditText?.text.toString())
-                pessoa?.getTel()?.setTelefone(telEditText?.text.toString())
+                pessoa?.nomePessoa = nomeEditText?.text.toString()
+                pessoa?.telPessoa?.telefone = telEditText?.text.toString()
             }
             //// Colocar na lista no mesmo lugar do objeto anteriror
             listaChegada?.set(indice!!,pessoa) // Colocando a LISTA INTEIRA com o rotulo "LISTA2"
@@ -89,8 +89,8 @@ class EditarITEMActivity : AppCompatActivity() {
             indice = pacoteChegada?.getInt("ITEM")?:-1
             /// Obter a pessoa dentro da lilsta
             var pessoa: Pessoa? = listaChegada?.get(indice!!)
-            nomeEditText?.setText(pessoa?.getNomePessoa().toString())
-            telEditText?.setText(pessoa?.getTel()?.getTelefone().toString())
+            nomeEditText?.setText(pessoa?.nomePessoa?.toString())
+            telEditText?.setText(pessoa?.telPessoa?.telefone?.toString())
         }
     }
     override fun onCreate(savedInstanceState: Bundle?) {
