@@ -9,6 +9,8 @@ import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
+import com.google.firebase.FirebaseApp
+import com.google.firebase.firestore.FirebaseFirestore
 import java.io.Serializable
 ///////////////////////////////////////////////
 // inserir "DATA" e tirar o "Serializable"
@@ -21,6 +23,7 @@ data class Telefone(
 //////////////////////////////////////////////
 // inserir "DATA"
 data class Pessoa(
+    var idPessoaFb: String = "xxx",
     var nomePessoa:String = "Joao",
     var telPessoa:Telefone = Telefone()
     ) :Serializable{
@@ -35,6 +38,8 @@ class MainActivity : AppCompatActivity() {
     private var listaItens: ArrayList<Pessoa>? = null
     private var listaItensView: ListView? = null
     private var adaptador: ArrayAdapter<Pessoa>? = null
+
+    private lateinit var bancoFb: FirebaseFirestore
     // Funcao que vai materializar os componentes visuais (ligar com os componentes de codigo)
     fun inicializar(){
         novoButton     = findViewById(R.id.ID1_NOVObutton)
@@ -43,8 +48,6 @@ class MainActivity : AppCompatActivity() {
         listaItens = ArrayList<Pessoa>()
         adaptador = ArrayAdapter<Pessoa>(this,android.R.layout.simple_list_item_1, listaItens!!)
         listaItensView?.adapter = adaptador
-        // para teste (remover depois)
-        listaItens?.add(Pessoa())
         adaptador?.notifyDataSetChanged()
         //////////////////////////////////////
     }
@@ -98,6 +101,7 @@ class MainActivity : AppCompatActivity() {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
             insets
         }
+        FirebaseApp.initializeApp(this)
         inicializar()
         inicializarAcoes()
         obterDadosRetorno()

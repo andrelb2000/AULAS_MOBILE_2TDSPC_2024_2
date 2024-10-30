@@ -10,6 +10,8 @@ import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
+import androidx.lifecycle.ReportFragment.Companion.reportFragment
+import com.google.firebase.firestore.FirebaseFirestore
 import java.io.InputStreamReader
 import java.net.HttpURLConnection
 import java.net.URL
@@ -29,6 +31,7 @@ class NovoITEMActivity : AppCompatActivity() {
     private var ruaEditText: EditText? = null
     private var cepEditText: EditText? = null
 
+    private lateinit var bancoFb: FirebaseFirestore
 
     fun inicializar(){
         confirmaButton = findViewById(R.id.ID2_CONFIRMAbutton)
@@ -45,11 +48,27 @@ class NovoITEMActivity : AppCompatActivity() {
         confirmaButton?.setOnClickListener {
             //// Pegar os novos valores nos componentes de entrada (Ex, edit text, etc)
             //// Criar um NOVO objeto da classe pessoa
-            var pessoa:Pessoa = Pessoa("")
+            var pessoa:Pessoa = Pessoa()
             pessoa?.nomePessoa = nomeEditText?.text.toString()
             pessoa?.telPessoa?.telefone = telEditText?.text.toString()
+            /// Adicionar pessoa no FIREBASE ///
+            bancoFb = FirebaseFirestore.getInstance()
+            bancoFb.collection("PESSOA").add(pessoa).addOnSuccessListener {
+                documento -> pessoa.idPessoaFb = documento.id
+                System.out.println("Pessoa adicionada ID: ${pessoa.idPessoaFb}")
+            }.addOnFailureListener { e ->
+                System.out.println("Erro ao adicionar dado pessoa: $e")
+            }
+
+            bancoFb.collection("PESSOA").document(pessoa.idPessoaFb).set(pessoa).addOnSuccessListener {
+                System.out.println("Pessoa adicionada ID: ${pessoa.idPessoaFb}")
+            }.addOnFailureListener { e ->
+                System.out.println("Erro ao adicionar dado pessoa: $e")
+            }
+            /////////////////////////////////////
             //// Colocar na lista no mesmo lugar do objeto anteriror
             listaChegada?.add(pessoa) // Colocando a LISTA INTEIRA com o rotulo "LISTA2"
+
 
 
 
