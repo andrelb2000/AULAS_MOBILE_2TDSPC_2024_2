@@ -51,6 +51,8 @@ class NovoITEMActivity : AppCompatActivity() {
             var pessoa:Pessoa = Pessoa()
             pessoa?.nomePessoa = nomeEditText?.text.toString()
             pessoa?.telPessoa?.telefone = telEditText?.text.toString()
+
+
             /// Adicionar pessoa no FIREBASE ///
             bancoFb = FirebaseFirestore.getInstance()
             bancoFb.collection("PESSOA").add(pessoa).addOnSuccessListener {
@@ -59,7 +61,7 @@ class NovoITEMActivity : AppCompatActivity() {
             }.addOnFailureListener { e ->
                 System.out.println("Erro ao adicionar dado pessoa: $e")
             }
-
+            // Atualizando com o ID que o FIREBASE criou para este objeto //
             bancoFb.collection("PESSOA").document(pessoa.idPessoaFb).set(pessoa).addOnSuccessListener {
                 System.out.println("Pessoa adicionada ID: ${pessoa.idPessoaFb}")
             }.addOnFailureListener { e ->
